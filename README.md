@@ -1,50 +1,37 @@
-# Welcome to your Expo app 👋
+# Application de recherche et de bataille entre pokemon
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+Cette application est développée dans le cadre d'un cours de l'école
+MyDigitalSchool
 
-## Get started
+## 1. Système de recherche
 
-1. Install dependencies
+- Interface puor rechercher un pokemon par nom
+- Interface pour rechercher des pokemons par type
+- Interface pour rechercher les type des pokemons
+- Interface pour lister tous les pokemons
 
-   ```bash
-   npm install
-   ```
+## 2. Système de capture de pokemon
 
-2. Start the app
+Quand je lance l'appli pour la première fois j'ai:
 
-   ```bash
-    npx expo start
-   ```
+- 10 de monnaie A et 5 de B
 
-In the output, you'll find options to open the app in a
+### Sous-système de Gatcha
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+En tant qu'utilisateur j'ai de la monnaie qui me permet:
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+- Interface pour récupérer des pokemons via des coffres
+- Interface de stockage de pokemons
+- Pas de limite de stockage
+- Limite d'un stockage de même type
+- Possibilité de donner un nom à nos pokemon
 
-## Get a fresh project
+Interface pour ouvrir des coffres avec de la monnaie
 
-When you're ready, run:
+Différentes monnaies qui me permettent d'ouvrir différents types de coffres (A,
+B, C)
 
-```bash
-npm run reset-project
-```
+## 3. Système de combat
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
-
-## Learn more
-
-To learn more about developing your project with Expo, look at the following resources:
-
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
-
-## Join the community
-
-Join our community of developers creating universal apps.
-
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+Les pokemons ont des types, qui ont des avantages par rapport à d'autres type de
+pokemon
