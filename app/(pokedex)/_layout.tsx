@@ -7,8 +7,8 @@ import TabBarBackground from '@/components/ui/TabBarBackground';
 import { Colors } from '@/constants/Colors';
 import { useColorScheme } from '@/hooks/useColorScheme';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { Pokemons } from './Pokemons';
-import { PC } from './PC';
+import Pokemons from './Pokemons';
+import PC from './PC';
 
 const Tab = createBottomTabNavigator();
 

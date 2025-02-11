@@ -7,8 +7,9 @@ import TabBarBackground from '@/components/ui/TabBarBackground';
 import { Colors } from '@/constants/Colors';
 import { useColorScheme } from '@/hooks/useColorScheme';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { CombatWindow } from './CombatWindow';
-import { Potions } from './Potions';
+import Potions from './Potions';
+import CombatWindow from './CombatWindow';
+
 
 const Tab = createBottomTabNavigator();
 
