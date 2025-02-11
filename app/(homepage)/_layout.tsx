@@ -35,8 +35,10 @@ export default function TabLayout() {
             <Tab.Screen
                 name="CombatLayout"
                 component={CombatLayout}
+                
                 options={{
                     title: 'Combat',
+                    unmountOnBlur: true,
                     tabBarIcon: ({ color }) => <IconSymbol size={28} name="house.fill" color={color} />,
                 }}
             />

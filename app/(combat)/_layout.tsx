@@ -9,6 +9,8 @@ import { useColorScheme } from '@/hooks/useColorScheme';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Potions from './Potions';
 import CombatWindow from './CombatWindow';
+import { View } from 'react-native-reanimated/lib/typescript/Animated';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 
 const Tab = createBottomTabNavigator();
@@ -17,36 +19,6 @@ export default function TabLayout() {
   const colorScheme = useColorScheme();
 
   return (
-    <Tab.Navigator
-      screenOptions={{
-        tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
-        headerShown: false,
-        tabBarButton: HapticTab,
-        tabBarBackground: TabBarBackground,
-        tabBarStyle: Platform.select({
-          ios: {
-            // Use a transparent background on iOS to show the blur effect
-            position: 'absolute',
-          },
-          default: {},
-        }),
-      }}>
-      <Tab.Screen
-        name="CombatWindow"
-        component={CombatWindow}
-        options={{
-          title: 'Combat',
-          tabBarIcon: ({ color }) => <IconSymbol size={28} name="house.fill" color={color} />,
-        }}
-      />
-      <Tab.Screen
-        name="Potions"
-        component={Potions}
-        options={{
-          title: 'Potions',
-          tabBarIcon: ({ color }) => <IconSymbol size={28} name="paperplane.fill" color={color} />,
-        }}
-      />
-    </Tab.Navigator>
+    <SafeAreaView style={{ flex: 1, backgroundColor: 'red' }} />
   );
 }
