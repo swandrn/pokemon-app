@@ -1,51 +1,30 @@
-import React from 'react';
-import { Platform } from 'react-native';
-
-import { HapticTab } from '@/components/HapticTab';
-import { IconSymbol } from '@/components/ui/IconSymbol';
-import TabBarBackground from '@/components/ui/TabBarBackground';
-import { Colors } from '@/constants/Colors';
-import { useColorScheme } from '@/hooks/useColorScheme';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import Pokemons from './Pokemons';
-import PC from './PC';
+import React, { useCallback, useEffect, useState } from "react";
+import { SafeAreaView, Button } from "react-native";
+import { useColorScheme } from "@/hooks/useColorScheme";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { Text } from "react-native";
+import { useFocusEffect } from "@react-navigation/native";
 
 const Tab = createBottomTabNavigator();
 
 export default function TabLayout() {
   const colorScheme = useColorScheme();
+  const [count, setCount] = useState(0);
+
+  useFocusEffect(
+    useCallback(() => {
+      setCount(0); 
+
+   /*    return () => {
+        setCount(0); 
+      }; */
+    }, [])
+  );
 
   return (
-    <Tab.Navigator
-      screenOptions={{
-        tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
-        headerShown: false,
-        tabBarButton: HapticTab,
-        tabBarBackground: TabBarBackground,
-        tabBarStyle: Platform.select({
-          ios: {
-            // Use a transparent background on iOS to show the blur effect
-            position: 'absolute',
-          },
-          default: {},
-        }),
-      }}>
-      <Tab.Screen
-        name="Pokemons"
-        component={Pokemons}
-        options={{
-          title: 'Pokemons',
-          tabBarIcon: ({ color }) => <IconSymbol size={28} name="house.fill" color={color} />,
-        }}
-      />
-      <Tab.Screen
-        name="PC"
-        component={PC}
-        options={{
-          title: 'PC',
-          tabBarIcon: ({ color }) => <IconSymbol size={28} name="paperplane.fill" color={color} />,
-        }}
-      />
-    </Tab.Navigator>
+    <SafeAreaView style={{ flex: 1, backgroundColor: "blue" }}>
+      <Text style={{ fontSize: 24, marginBottom: 10, color: "white" }}>Count: {count}</Text>
+      <Button title="Increment Count" onPress={() => setCount(count + 1)} />
+    </SafeAreaView>
   );
 }
