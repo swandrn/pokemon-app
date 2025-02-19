@@ -45,91 +45,104 @@ export default function RootLayout() {
 
   return (
     <ThemeProvider value={DefaultTheme}>
-      <View style={{ flex: 1, backgroundColor: "", marginBottom: 0, borderRadius: 20 }}>
-        <Tab.Navigator
-          screenOptions={{
-            tabBarActiveTintColor: Colors[colorScheme ?? "light"].tint,
-            headerShown: false,
-            tabBarButton: HapticTab,
-            tabBarBackground: TabBarBackground,
-            tabBarStyle: Platform.select({
-              ios: {
-                // Use a transparent background on iOS to show the blur effect
-                position: "absolute",
-                backgroundColor: "",
-              },
-              default: {
-                marginHorizontal: "auto",
-                borderRadius: 5,
-                width: "97%",
-                borderTopWidth: 5,
-                borderBottomWidth: 5,
-                borderColor: "orange",
-                backgroundColor: "#ffb04f",
-              },
-            }),
-          }}>
-          <Tab.Screen
-            name="PC"
-            component={PC}
-            options={{
-              title: "",
-              tabBarIcon: ({ color }) => (
-                <View style={{}}>
-                  <Image source={require("../assets/images/PC.png")} style={{ width: 40, height: 40, objectFit: "contain" }} />
-                </View>
-              ),
-            }}
-          />
-          <Tab.Screen
-            name="Chest"
-            component={PokedexLayout}
-            options={{
-              title: "",
-              tabBarIcon: ({ color }) => (
-                <View style={{}}>
-                  <Image source={require("../assets/images/Gatcha.png")} style={{ width: 40, height: 40, objectFit: "contain", marginRight: 15 }} />
-                </View>
-              ),
-            }}
-          />
-          <Tab.Screen
-            name="Home"
-            component={PokedexLayout}
-            options={{
-              title: "",
-              tabBarIcon: ({ color }) => (
-                <View style={{}}>
-                  <Image source={require("../assets/images/pokeball3.png")} style={{ width: 80, height: 80 }} />
-                </View>
-              ),
-            }}
-          />
-          <Tab.Screen
-            name="CombatLayout"
-            component={CombatLayout}
-            options={{
-              title: "",
-              tabBarIcon: ({ color }) => (
-                <View style={{}}>
-                  <Image source={require("../assets/images/Combat.png")} style={{ width: 40, height: 40, objectFit: "contain", marginLeft: 15 }} />
-                </View>
-              ),
-            }}
-          />
-          <Tab.Screen
-            name="PokedexLayout"
-            component={PokedexLayout}
-            options={{
-              title: "",
-              tabBarIcon: ({ color }) => (
-                <View style={{}}>
-                  <Image source={require("../assets/images/Items.png")} style={{ width: 40, height: 40, objectFit: "contain" }} />
-                </View>
-              ),
-            }}
-          />
-        </Tab.Navigator>
+      <View style={{ flex: 1 }}>
+        {/* Orange bar at the top */}
+        <View
+          style={{          
+            height: 35, 
+            width: "100%",
+            borderTopWidth: 5,
+            borderBottomWidth: 5,
+            borderColor: "orange",
+            backgroundColor: "#ffb04f",
+          }}
+        />
+        <View style={{ flex: 1, backgroundColor: "", marginBottom: 0, borderRadius: 20 }}>
+          <Tab.Navigator
+            screenOptions={{
+              tabBarActiveTintColor: Colors[colorScheme ?? "light"].tint,
+              headerShown: false,
+              tabBarButton: HapticTab,
+              tabBarBackground: TabBarBackground,
+              tabBarStyle: Platform.select({
+                ios: {
+                  // Use a transparent background on iOS to show the blur effect
+                  position: "absolute",
+                  backgroundColor: "",
+                },
+                default: {
+                  marginHorizontal: "auto",
+                  borderRadius: 5,
+                  width: "97%",
+                  borderTopWidth: 5,
+                  borderBottomWidth: 5,
+                  borderColor: "orange",
+                  backgroundColor: "#ffb04f",
+                },
+              }),
+            }}>
+            <Tab.Screen
+              name="PC"
+              component={PC}
+              options={{
+                title: "",
+                tabBarIcon: ({ color }) => (
+                  <View style={{}}>
+                    <Image source={require("../assets/images/PC.png")} style={{ width: 40, height: 40, objectFit: "contain" }} />
+                  </View>
+                ),
+              }}
+            />
+            <Tab.Screen
+              name="Chest"
+              component={PokedexLayout}
+              options={{
+                title: "",
+                tabBarIcon: ({ color }) => (
+                  <View style={{}}>
+                    <Image source={require("../assets/images/Gatcha.png")} style={{ width: 40, height: 40, objectFit: "contain", marginRight: 15 }} />
+                  </View>
+                ),
+              }}
+            />
+            <Tab.Screen
+              name="Home"
+              component={PokedexLayout}
+              options={{
+                title: "",
+                tabBarIcon: ({ color }) => (
+                  <View style={{}}>
+                    <Image source={require("../assets/images/pokeball3.png")} style={{ width: 80, height: 80 }} />
+                  </View>
+                ),
+              }}
+            />
+            <Tab.Screen
+              name="CombatLayout"
+              component={CombatLayout}
+              options={{
+                title: "",
+                tabBarIcon: ({ color }) => (
+                  <View style={{}}>
+                    <Image source={require("../assets/images/Combat.png")} style={{ width: 40, height: 40, objectFit: "contain", marginLeft: 15 }} />
+                  </View>
+                ),
+              }}
+            />
+            <Tab.Screen
+              name="PokedexLayout"
+              component={PokedexLayout}
+              options={{
+                title: "",
+                tabBarIcon: ({ color }) => (
+                  <View style={{}}>
+                    <Image source={require("../assets/images/Items.png")} style={{ width: 40, height: 40, objectFit: "contain" }} />
+                  </View>
+                ),
+              }}
+            />
+          </Tab.Navigator>
+        </View>
       </View>
       <StatusBar style="auto" />
     </ThemeProvider>

@@ -1,9 +1,19 @@
 type Pokemon = {
     id: number
+    game_index: number
     name: string
     types: type[]
     sprites: sprites
     species: species
+    moves: move[]
+    stats: stat[]
+}
+
+
+
+type move = {
+    name: string
+    url: string
 }
 
 type sprites = {
@@ -17,8 +27,20 @@ type species = {
 }
 
 type type = {
-    name: string
-    url: string
+    slot: number
+    type: {
+        name: string
+        url: string
+    }
 }
 
-export type { Pokemon, sprites, type }
+type stat = {
+    base_stat: number
+    effort: number
+    stat: {
+        name: string
+        url: string
+    }
+}
+
+export type { Pokemon, sprites, type, stat, move }
