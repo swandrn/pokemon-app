@@ -4,20 +4,19 @@ import * as SplashScreen from "expo-splash-screen";
 import { StatusBar } from "expo-status-bar";
 import { useEffect } from "react";
 import "react-native-reanimated";
-
 import { useColorScheme } from "@/hooks/useColorScheme";
 import { createStackNavigator } from "@react-navigation/stack";
-import HomepageLayout from "./(homepage)/_layout";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { HapticTab } from "@/components/HapticTab";
 import React from "react";
 import { Image, Platform, View } from "react-native";
-import { IconSymbol } from "@/components/ui/IconSymbol";
+
 import TabBarBackground from "@/components/ui/TabBarBackground";
 import { Colors } from "@/constants/Colors";
 
 import CombatLayout from "./(combat)/_layout";
 import PokedexLayout from "./(pokedex)/_layout";
+import PC from "./(pc)/pc";
 
 // Removed Pokeball import since file doesn't exist
 
@@ -45,8 +44,8 @@ export default function RootLayout() {
   const Tab = createBottomTabNavigator();
 
   return (
-    <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
-      <View style={{ flex: 1, backgroundColor: "", marginBottom: 5, borderRadius: 20 }}>
+    <ThemeProvider value={DefaultTheme}>
+      <View style={{ flex: 1, backgroundColor: "", marginBottom: 0, borderRadius: 20 }}>
         <Tab.Navigator
           screenOptions={{
             tabBarActiveTintColor: Colors[colorScheme ?? "light"].tint,
@@ -57,22 +56,22 @@ export default function RootLayout() {
               ios: {
                 // Use a transparent background on iOS to show the blur effect
                 position: "absolute",
-                backgroundColor: "red",
+                backgroundColor: "",
               },
               default: {
                 marginHorizontal: "auto",
                 borderRadius: 5,
                 width: "97%",
-                backgroundColor: "red",
                 borderTopWidth: 5,
                 borderBottomWidth: 5,
-                borderColor: "white",
+                borderColor: "orange",
+                backgroundColor: "#ffb04f",
               },
             }),
           }}>
           <Tab.Screen
             name="PC"
-            component={CombatLayout}
+            component={PC}
             options={{
               title: "",
               tabBarIcon: ({ color }) => (
@@ -89,7 +88,7 @@ export default function RootLayout() {
               title: "",
               tabBarIcon: ({ color }) => (
                 <View style={{}}>
-                  <Image source={require("../assets/images/Gatcha.png")} style={{ width: 40, height: 40, objectFit: "contain" }} />
+                  <Image source={require("../assets/images/Gatcha.png")} style={{ width: 40, height: 40, objectFit: "contain", marginRight: 15 }} />
                 </View>
               ),
             }}
@@ -101,7 +100,7 @@ export default function RootLayout() {
               title: "",
               tabBarIcon: ({ color }) => (
                 <View style={{}}>
-                  <Image source={require("../assets/images/Pokeball2.png")} style={{ width: 80, height: 80 }} />
+                  <Image source={require("../assets/images/pokeball3.png")} style={{ width: 80, height: 80 }} />
                 </View>
               ),
             }}
@@ -113,7 +112,7 @@ export default function RootLayout() {
               title: "",
               tabBarIcon: ({ color }) => (
                 <View style={{}}>
-                  <Image source={require("../assets/images/Combat.png")} style={{ width: 40, height: 40, objectFit: "contain" }} />
+                  <Image source={require("../assets/images/Combat.png")} style={{ width: 40, height: 40, objectFit: "contain", marginLeft: 15 }} />
                 </View>
               ),
             }}

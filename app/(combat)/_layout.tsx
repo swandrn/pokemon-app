@@ -19,6 +19,6 @@ export default function TabLayout() {
   const colorScheme = useColorScheme();
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: 'red' }} />
+    <SafeAreaView style={{ flex: 1, backgroundColor: 'white' }} />
   );
 }
