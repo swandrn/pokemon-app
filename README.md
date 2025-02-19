@@ -35,3 +35,6 @@ B, C)
 
 Les pokemons ont des types, qui ont des avantages par rapport à d'autres type de
 pokemon
+
+
+sprite de back jusqu'à id = 898
