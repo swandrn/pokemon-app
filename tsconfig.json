@@ -5,7 +5,9 @@
     "paths": {
       "@/*": [
         "./*"
-      ]
+      ],
+      "@images/*": ["./assets/images/*"],
+      "@typeImages/*": ["./assets/images/typesImages/*"]
     }
   },
   "include": [
