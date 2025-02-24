@@ -1,4 +1,4 @@
-export const fetchPokemonData = async (id) => {
+export const fetchPokemonData = async (id, isShiny) => {
   try {
     const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${id}`);
     const data = await response.json();
@@ -24,17 +24,18 @@ export const fetchPokemonData = async (id) => {
     });
 
     const pokemon = {
-      id: 0,
-      game_index: id,
+      game_index: data.id,
       name: data.name,
-      types: data.types,
-      sprites: {
-        front: data.sprites.front_default,
-        back: data.sprites.back_default,
+      types: {
+        primary_type: data.types[0].type.name,
+        secondary_type: data.types[1] ? data.types[1].type.name : undefined
       },
+      front_sprite: isShiny ? data.sprites.front_shiny : data.sprites.front_default,
+      back_sprite: isShiny ? data.sprites.back_shiny : data.sprites.back_default,
       species: data.species,
       moves: movesData,
       stats: statsData,
+      is_shiny: isShiny,
     };
     return pokemon;
 

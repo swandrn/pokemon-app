@@ -5,7 +5,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { fetchPokemonData } from "../../poke-API/pokemonsDataFetch";
 import typeImages from "@/types/images";
 import { useSQLiteContext } from "expo-sqlite";
-import { PokemonTableValues } from "../(gacha)/gacha";
+import { PokemonTableValues } from "@/types/types";
 import { useFocusEffect } from "@react-navigation/native";
 
 export default function PC() {
@@ -48,10 +48,9 @@ export default function PC() {
       const getOwnedPokemons = async () => {
         const pokemonTableValues: PokemonTableValues[] = await db.getAllAsync(
           `SELECT game_index, name, primary_type, secondary_type, front_sprite, back_sprite, 
-                  hp_stat, attack_stat, defense_stat, special_attack_stat, special_defense_stat, speed_stat 
+                  hp_stat, attack_stat, defense_stat, special_attack_stat, special_defense_stat, speed_stat, isShiny 
            FROM pokemon`
         );
-        console.log(pokemonTableValues);
         setOwnedPokemons(pokemonTableValues);
       };
 
@@ -103,11 +102,13 @@ export default function PC() {
         <View>
           <View>
             <Text style={{ fontSize: 20, fontWeight: "bold", color: "black" }}>{pokemon?.name}</Text>
-            <Image source={{ uri: pokemon?.sprites.front }} style={{ width: 140, height: 140 }} />
+            <Image source={{ uri: pokemon?.front_sprite }} style={{ width: 140, height: 140 }} />
             <View style={{ flexDirection: "row", gap: 10 }}>
-              {pokemon?.types.map((type) => {
-                return <Image key={type.type.name} source={typeImages[type.type.name] || typeImages["default"]} style={{ width: 40, height: 40 }} />;
-              })}
+              {<>
+                <Image key={pokemon.types.primary_type} source={typeImages[pokemon.types.primary_type] || typeImages["default"]} style={{ width: 40, height: 40 }} />
+                {pokemon.types.secondary_type && <Image key={pokemon.types.secondary_type} source={typeImages[pokemon.types.secondary_type] || typeImages["default"]} style={{ width: 40, height: 40 }} />
+                }
+              </>}
             </View>
             <Text style={{ fontSize: 20, fontWeight: "bold", color: "black" }}>Stats</Text>
 
@@ -121,14 +122,14 @@ export default function PC() {
               <Text key={move.name}>{move.name}</Text>
             ))}
           </View>
-          <View>
-            <Text style={{ fontSize: 20, fontWeight: "bold", color: "black" }}>Caught Pokemons</Text>
-            {ownedPokemons?.map((pokemon, index) => {
-              return <Image key={index} source={{ uri: pokemon.front_sprite }} style={{ width: 100, height: 100 }} />;
-            })}
-          </View>
         </View>
       )}
+      <View>
+        <Text style={{ fontSize: 20, fontWeight: "bold", color: "black" }}>Caught Pokemons</Text>
+        {ownedPokemons?.map((pokemon, index) => {
+          return <Image key={index} source={{ uri: pokemon.front_sprite }} style={{ width: 100, height: 100 }} />;
+        })}
+      </View>
     </ScrollView>
   );
 }
