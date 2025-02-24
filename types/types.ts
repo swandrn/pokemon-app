@@ -9,8 +9,6 @@ type Pokemon = {
     stats: stat[]
 }
 
-
-
 type move = {
     name: string
     url: string
