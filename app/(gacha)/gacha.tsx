@@ -9,7 +9,7 @@ import { formatFromAPI } from "../../poke-API/formatApiResponse";
 export default function Gacha() {
     const db = useSQLiteContext();
     const [pokemon, setPokemon] = useState<Pokemon>();
-    const [pokemonGameIndex, setPokemonGameIndex] = useState<string>("");
+    const [tapCount, setTapCount] = useState(0);
 
     // Create table on mount
     useEffect(() => {
@@ -45,12 +45,11 @@ export default function Gacha() {
         createTable();
     }, []);
 
-    const fetchPokemon = async () => {
+    const fetchPokemon = async (pokemonGameIndex: number) => {
         const isShiny = false;
         const json = await fetchPokemonData(pokemonGameIndex, isShiny);
         const pokemonTableValues: PokemonTableValues = formatFromAPI(json);
         try {
-            console.log('search game index: ', pokemonGameIndex, 'database game index: ', pokemonTableValues.game_index)
             const existingPokemon = await db.getFirstAsync(
                 `SELECT count FROM pokemon WHERE game_index = ? AND isShiny = ?`,
                 [pokemonTableValues.game_index, isShiny]
@@ -92,13 +91,27 @@ export default function Gacha() {
         }
     }
 
+    const handlePress = () => {
+        setTapCount((prev) => prev + 1);
+
+        setTimeout(() => {
+            setTapCount(0);
+        }, 3000);
+
+        if (tapCount + 1 === 3) {
+            setTapCount(0);
+            const pokemonGameIndex = Math.floor(Math.random() * 898) + 1;
+            fetchPokemon(pokemonGameIndex)
+        }
+    };
+
     return (
         <SafeAreaView style={{ flex: 1, flexDirection: "column", padding: 10 }}>
             <Text style={{ fontSize: 20, fontWeight: "bold", color: "black" }}>Gacha</Text>
             <View>
                 <Text style={{ fontSize: 20, fontWeight: "bold", color: "black" }}>Pokemons</Text>
-                <TextInput placeholder="Pokemon Game index to fetch" value={pokemonGameIndex} onChangeText={(text) => setPokemonGameIndex(text)} />
-                <Button title="Fetch Pokemon" onPress={() => fetchPokemon()} />
+                <Button title="Fetch Pokemon" onPress={() => handlePress()
+                } />
             </View>
             <View>
                 <Image source={{ uri: pokemon?.front_sprite }} style={{ width: 100, height: 100 }} />

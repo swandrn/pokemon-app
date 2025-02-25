@@ -1,6 +1,6 @@
 import { Pokemon } from "@/types/types";
 import { useCallback, useEffect, useState } from "react";
-import { Button, Image, ScrollView, Text, TextInput, View } from "react-native";
+import { Button, FlatList, Image, ScrollView, Text, TextInput, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { fetchPokemonData } from "../../poke-API/pokemonsDataFetch";
 import typeImages from "@/types/images";
@@ -126,9 +126,21 @@ export default function PC() {
       )}
       <View>
         <Text style={{ fontSize: 20, fontWeight: "bold", color: "black" }}>Caught Pokemons</Text>
-        {ownedPokemons?.map((pokemon, index) => {
-          return <Image key={index} source={{ uri: pokemon.front_sprite }} style={{ width: 100, height: 100 }} />;
-        })}
+        <FlatList
+          data={ownedPokemons}
+          keyExtractor={(item, index) => index.toString()}
+          numColumns={5}
+          scrollEnabled={false}
+          columnWrapperStyle={{
+            flexWrap: "wrap",
+            justifyContent: "flex-start",
+          }}
+          renderItem={({ item }) => (
+            <View style={{ width: "20%", alignItems: "center", marginVertical: 5 }}>
+              <Image source={{ uri: item.front_sprite }} style={{ width: 60, height: 60 }} />
+            </View>
+          )}
+        />
       </View>
     </ScrollView>
   );

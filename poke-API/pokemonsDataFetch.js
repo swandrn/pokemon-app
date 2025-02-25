@@ -37,7 +37,12 @@ export const fetchPokemonData = async (id, isShiny) => {
       stats: statsData,
       is_shiny: isShiny,
     };
-    return pokemon;
+    if(!pokemon.back_sprite || !pokemon.front_sprite){
+      fetchPokemonData();
+      return;
+    } else{
+      return pokemon;
+    }
 
   } catch (error) {
     console.error("Erreur lors de la récupération des données du Pokémon:", error);
