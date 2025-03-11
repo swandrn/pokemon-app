@@ -1,7 +1,6 @@
 import { Pokemon } from "@/types/types";
 import { useCallback, useEffect, useState } from "react";
 import { Button, FlatList, Image, ScrollView, Text, TextInput, View } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
 import { fetchPokemonData } from "../../poke-API/pokemonsDataFetch";
 import typeImages from "@/types/images";
 import { useSQLiteContext } from "expo-sqlite";
@@ -25,7 +24,7 @@ export default function PC() {
       const getOwnedPokemons = async () => {
         const pokemonTableValues: PokemonTableValues[] = await db.getAllAsync(
           `SELECT game_index, name, primary_type, secondary_type, front_sprite, back_sprite, 
-                  hp_stat, attack_stat, defense_stat, special_attack_stat, special_defense_stat, speed_stat, isShiny 
+                  hp_stat, attack_stat, defense_stat, special_attack_stat, special_defense_stat, speed_stat, is_shiny 
            FROM pokemon`
         );
         setOwnedPokemons(pokemonTableValues);

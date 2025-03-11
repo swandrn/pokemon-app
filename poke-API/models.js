@@ -1,5 +1,6 @@
 export const createTable = async (db) => {
     try {
+        // await db.execAsync(`DROP TABLE IF EXISTS pokemon;`);
         await db.execAsync(`
                     CREATE TABLE IF NOT EXISTS pokemon (
                         id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -15,8 +16,8 @@ export const createTable = async (db) => {
                         special_attack_stat INTEGER NOT NULL,
                         special_defense_stat INTEGER NOT NULL,
                         speed_stat INTEGER NOT NULL,
-                        isShiny INTEGER NOT NULL,
-                        inParty INTEGER DEFAULT 0,
+                        is_shiny INTEGER NOT NULL,
+                        in_party INTEGER DEFAULT 0,
                         count INTEGER DEFAULT 1
                     );
                 `);

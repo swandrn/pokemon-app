@@ -23,20 +23,20 @@ export default function Gacha() {
         const pokemonTableValues: PokemonTableValues = formatFromAPI(json);
         try {
             const existingPokemon = await db.getFirstAsync(
-                `SELECT count FROM pokemon WHERE game_index = ? AND isShiny = ?`,
+                `SELECT count FROM pokemon WHERE game_index = ? AND is_shiny = ?`,
                 [pokemonTableValues.game_index, isShiny]
             );
 
             if (existingPokemon) {
                 await db.runAsync(
-                    `UPDATE pokemon SET count = count + 1 WHERE game_index = ? AND isShiny = ?`,
+                    `UPDATE pokemon SET count = count + 1 WHERE game_index = ? AND is_shiny = ?`,
                     [pokemonTableValues.game_index, isShiny]
                 );
                 console.log(`Updated count for Pokémon: ${pokemonTableValues.name}`);
             } else {
                 await db.runAsync(
                     `INSERT INTO pokemon 
-                      (game_index, name, primary_type, secondary_type, front_sprite, back_sprite, hp_stat, attack_stat, defense_stat, special_attack_stat, special_defense_stat, speed_stat, isShiny)
+                      (game_index, name, primary_type, secondary_type, front_sprite, back_sprite, hp_stat, attack_stat, defense_stat, special_attack_stat, special_defense_stat, speed_stat, is_shiny)
                       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);`,
                     [
                         pokemonTableValues.game_index,
