@@ -5,6 +5,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { fetchPokemonData } from "../../poke-API/pokemonsDataFetch"
 import { useSQLiteContext } from "expo-sqlite";
 import { formatFromAPI } from "../../poke-API/formatApiResponse";
+import { createTable } from "@/poke-API/models"
 
 export default function Gacha() {
     const db = useSQLiteContext();
@@ -13,36 +14,7 @@ export default function Gacha() {
 
     // Create table on mount
     useEffect(() => {
-        const createTable = async () => {
-            try {
-                await db.execAsync(`DROP TABLE IF EXISTS pokemon;`);
-                console.log("Pokémon table deleted successfully");
-                await db.execAsync(`
-                    CREATE TABLE IF NOT EXISTS pokemon (
-                        id INTEGER PRIMARY KEY AUTOINCREMENT,
-                        game_index INTEGER NOT NULL,
-                        name TEXT NOT NULL,
-                        primary_type TEXT NOT NULL,
-                        secondary_type TEXT,
-                        front_sprite TEXT NOT NULL,
-                        back_sprite TEXT NOT NULL,
-                        hp_stat INTEGER NOT NULL,
-                        attack_stat INTEGER NOT NULL,
-                        defense_stat INTEGER NOT NULL,
-                        special_attack_stat INTEGER NOT NULL,
-                        special_defense_stat INTEGER NOT NULL,
-                        speed_stat INTEGER NOT NULL,
-                        isShiny INTEGER NOT NULL,
-                        count INTEGER DEFAULT 1
-                    );
-                `);
-                console.log("Table created successfully");
-            } catch (error) {
-                console.error("Error creating table:", error);
-            }
-        };
-
-        createTable();
+        createTable(db);
     }, []);
 
     const fetchPokemon = async (pokemonGameIndex: number) => {

@@ -7,6 +7,7 @@ import typeImages from "@/types/images";
 import { useSQLiteContext } from "expo-sqlite";
 import { PokemonTableValues } from "@/types/types";
 import { useFocusEffect } from "@react-navigation/native";
+import { createTable } from "@/poke-API/models";
 
 export default function PC() {
   const db = useSQLiteContext();
@@ -16,31 +17,7 @@ export default function PC() {
 
   // Create table on mount
   useEffect(() => {
-    const createTable = async () => {
-      try {
-        await db.execAsync(`
-          CREATE TABLE IF NOT EXISTS pokemon (
-              id INTEGER PRIMARY KEY AUTOINCREMENT,
-              game_index INTEGER NOT NULL,
-              name TEXT NOT NULL,
-              primary_type TEXT NOT NULL,
-              secondary_type TEXT,
-              front_sprite TEXT NOT NULL,
-              back_sprite TEXT NOT NULL,
-              hp_stat INTEGER NOT NULL,
-              attack_stat INTEGER NOT NULL,
-              defense_stat INTEGER NOT NULL,
-              special_attack_stat INTEGER NOT NULL,
-              special_defense_stat INTEGER NOT NULL,
-              speed_stat INTEGER NOT NULL
-          );
-      `);
-        console.log("Table created successfully");
-      } catch (error) {
-        console.error("Error creating table:", error);
-      }
-    };
-    createTable();
+    createTable(db);
   }, []);
 
   useFocusEffect(
