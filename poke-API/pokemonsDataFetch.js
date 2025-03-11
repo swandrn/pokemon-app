@@ -38,7 +38,8 @@ export const fetchPokemonData = async (id, isShiny) => {
       is_shiny: isShiny,
     };
     if(!pokemon.back_sprite || !pokemon.front_sprite){
-      fetchPokemonData();
+      const pokemonGameIndex = Math.floor(Math.random() * 898) + 1;
+      fetchPokemonData(pokemonGameIndex, isShiny);
       return;
     } else{
       return pokemon;

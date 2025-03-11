@@ -13,6 +13,7 @@ type PokemonTableValues = {
     special_defense_stat: number;
     speed_stat: number;
     is_shiny: boolean;
+    in_party: boolean;
 }
 
 type Pokemon = {

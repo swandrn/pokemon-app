@@ -54,3 +54,15 @@ export async function removePokemonFromParty(db, pokemonId) {
         return false;
     }
 }
+
+export async function getCurrentParty(db){
+    try {
+        const partyPokemons = await db.getAllAsync(
+            `SELECT * FROM pokemon WHERE in_party = 1;`
+        );
+        return partyPokemons;
+    } catch (error) {
+        console.error("Error fetching current party:", error);
+        return [];
+    }
+}
