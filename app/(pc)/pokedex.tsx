@@ -1,18 +1,25 @@
 import { useEffect, useState } from "react";
 import { FlatList, Image, Pressable, ScrollView, Text, View } from "react-native";
-import { AllPokemons, Pokemon } from "../../types/types";
-import { fetchAllPokemons, fetchPokemonData, fetchPokemonDescription } from "@/poke-API/pokemonsDataFetch";
+import { AllPokemons, Pokemon, PokemonToFetch } from "../../types/types";
+import { fetchAllPokemons, fetchPokemonByType, fetchPokemonData, fetchPokemonDescription } from "@/poke-API/pokemonsDataFetch";
 import typeImages from "@/types/images";
+
+
+type pokeTypeObject = {
+  type: string;
+  pokemons: PokemonToFetch[];
+}
 
 export default function Pokedex() {
   const [selectedPokemon, setSelectedPokemon] = useState<Pokemon | null>(null);
-  const [fetchedPokemons, setFetchedPokemons] = useState<AllPokemons | null>(null);
+  const [displayedPokemons, setDisplayedPokemons] = useState< PokemonToFetch[] | null>(null);
   const [pokemonDescription, setPokemonDescription] = useState<string | null>(null);
+  const [typeSearchResults, setTypeSearchResults] = useState<pokeTypeObject[]>([]);
   const [selectedTypes, setSelectedTypes] = useState<string[]>([]);
 
   useEffect(() => {
     fetchAllPokemons(0).then((data) => {
-      setFetchedPokemons(data);
+      setDisplayedPokemons(data.results);
     });
     fetchPokemonData(1, false).then((data) => {
       setSelectedPokemon(data as Pokemon);
@@ -20,21 +27,62 @@ export default function Pokedex() {
   }, []);
 
   useEffect(() => {
+    console.log(selectedPokemon?.game_index);
     fetchPokemonDescription(selectedPokemon?.game_index).then((data) => {
       setPokemonDescription(data);
     });
-    console.log(pokemonDescription);
   }, [selectedPokemon]);
 
-  const handlePageChange = (page: number) => {
-    fetchAllPokemons(page).then((data) => {
-      setFetchedPokemons({...fetchedPokemons, ...(data as AllPokemons)});
-    });
+  useEffect(() => {
+    console.log(typeSearchResults);
+    if(typeSearchResults.length === 0) {
+      fetchAllPokemons(0).then((data) => {
+        setDisplayedPokemons(data.results);
+      });
+    }else if(typeSearchResults.length === 1){
+      setDisplayedPokemons(typeSearchResults[0].pokemons);
+    }else{
+      setDisplayedPokemons(
+        typeSearchResults
+          .map((t) => t.pokemons)
+          .reduce((acc, curr) => acc.filter(pokemon => curr.some(p => p.name === pokemon.name)))
+      );
+    }
+  }, [typeSearchResults]);
+
+ 
+
+  const handleTypeClick = (type: string) => {
+    if(selectedTypes.includes(type)) {
+      setSelectedTypes(selectedTypes.filter((t) => t !== type));
+      setTypeSearchResults(typeSearchResults.filter((t) => t.type !== type));
+    } else {
+      if(selectedTypes.length < 2){
+        setSelectedTypes([...selectedTypes, type]);
+        fetchPokemonByType(type).then((data) => {
+          setTypeSearchResults([...typeSearchResults, {type: type, pokemons: data}]);
+        });
+      }
+      
+    }
   };
 
-  const filterByType = (pokemon: Pokemon) => {
-  
-  };
+  /* const filterByType = () => {
+    fetchPokemonByType(type).then((data) => {
+      if(selectedTypes.length === 0) {
+        fetchAllPokemons(0).then((data) => {
+          setDisplayedPokemons(data);
+        });
+      } else if (selectedTypes.length === 1) {
+        fetchPokemonByType(selectedTypes[0]).then((data) => {
+          setDisplayedPokemons(data as AllPokemons);
+        });
+      }else{
+        const pokemonsToFilter = 
+        fetched
+      }
+    });
+  }; */
 
 
   return (
@@ -52,11 +100,7 @@ export default function Pokedex() {
         renderItem={({ item, index }) => (
           <Pressable
             onPress={() => {
-              if (selectedTypes.includes(Object.keys(typeImages)[index])) {
-                setSelectedTypes(selectedTypes.filter((type) => type !== Object.keys(typeImages)[index]));
-              } else {
-                setSelectedTypes([...selectedTypes, Object.keys(typeImages)[index]]);
-              }
+              handleTypeClick(Object.keys(typeImages)[index]);
             }}
             style={{ width: "9%", alignItems: "center", marginVertical: 5, marginHorizontal: 3 }}>
             <Image source={item} style={{ width: 35, height: 35, opacity: selectedTypes.includes(Object.keys(typeImages)[index]) ? 1 : 0.5, borderWidth: selectedTypes.includes(Object.keys(typeImages)[index]) ? 2 : 0, borderColor: "darkorange", borderRadius: 15 }} />
@@ -122,7 +166,7 @@ export default function Pokedex() {
           contentContainerStyle={{
             padding: 10,
           }}
-          data={fetchedPokemons?.results}
+          data={displayedPokemons}
           renderItem={({ item }) => (
             <Pressable
               onPress={() => {
