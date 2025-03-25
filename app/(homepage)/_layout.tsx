@@ -7,7 +7,7 @@ import TabBarBackground from '@/components/ui/TabBarBackground';
 import { Colors } from '@/constants/Colors';
 import { useColorScheme } from '@/hooks/useColorScheme';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import CombatLayout from '../(combat)/_layout';
+import CombatLayout from '../(combat)/combat';
 import PokedexLayout from '../(pokedex)/_layout';
 
 

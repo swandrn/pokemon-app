@@ -16,5 +16,6 @@ export const formatFromAPI = (json) => {
         special_defense_stat: json['stats'][4]['base_stat'],
         speed_stat: json['stats'][5]['base_stat'],
         is_shiny: json['is_shiny'],
+        in_party: false,
     }
 }

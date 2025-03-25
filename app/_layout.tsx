@@ -14,7 +14,7 @@ import { Image, Platform, View } from "react-native";
 import TabBarBackground from "@/components/ui/TabBarBackground";
 import { Colors } from "@/constants/Colors";
 
-import CombatLayout from "./(combat)/_layout";
+import CombatLayout from "./(combat)/combat";
 import PokedexLayout from "./(pokedex)/_layout";
 import PC from "./(pc)/pc";
 import Gacha from "./(gacha)/gacha";

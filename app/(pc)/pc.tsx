@@ -4,10 +4,11 @@ import typeImages from "@/types/images";
 import { useSQLiteContext } from "expo-sqlite";
 import { PokemonTableValues } from "@/types/types";
 import { useFocusEffect } from "@react-navigation/native";
-import { createTable, getOwnedPokemons } from "@/poke-API/database";
+import { getOwnedPokemons } from "@/poke-API/database";
 
 import React from "react";
 import Pokedex from "./pokedex";
+import { createTable } from "@/poke-API/models";
 
 export default function PC() {
   const db = useSQLiteContext();
@@ -19,7 +20,6 @@ export default function PC() {
   // Create table on mount
   useEffect(() => {
     createTable(db);
-    console.log("selectedTypes", selectedTypes);
   }, []);
 
   const filterPokemons = () => {
