@@ -28,14 +28,19 @@ export default function Pokedex() {
 
   const handlePageChange = (page: number) => {
     fetchAllPokemons(page).then((data) => {
-      setFetchedPokemons(data);
+      setFetchedPokemons({...fetchedPokemons, ...(data as AllPokemons)});
     });
   };
+
+  const filterByType = (pokemon: Pokemon) => {
+  
+  };
+
 
   return (
     <View style={{flex: 1, flexDirection: "column", padding: 5, minHeight: "100%"}}>
       <FlatList
-        style={{ width: "100%" }}
+        style={{ width: "100%", flex: 1 }}
         data={Object.values(typeImages)}
         keyExtractor={(item, index) => index.toString()}
         numColumns={9}
@@ -60,7 +65,7 @@ export default function Pokedex() {
       />
       <View
         style={{
-          flex: 1,
+          flex: 6,
           position: "relative",
           flexDirection: "row",
         }}>

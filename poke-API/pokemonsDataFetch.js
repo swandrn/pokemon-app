@@ -57,6 +57,18 @@ export const fetchAllPokemons = async (page) => {
   return data;
 };
 
+export const fetchPokemonByType = async (type) => {
+  const response = await fetch(`https://pokeapi.co/api/v2/type/${type}`);
+  const data = await response.json();
+  const pokemon = data.pokemon.map((pokemon) => {
+    return {
+      name: pokemon.pokemon.name,
+      url: pokemon.pokemon.url,
+    };
+  });
+  return pokemon;
+};
+
 export const fetchPokemonDescription = async (id) => {
   const response = await fetch(`https://pokeapi.co/api/v2/pokemon-species/${id}`);
   const data = await response.json();
