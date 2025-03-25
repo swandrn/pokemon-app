@@ -8,7 +8,7 @@ import { getOwnedPokemons } from "@/poke-API/database";
 
 import React from "react";
 import Pokedex from "./pokedex";
-import { createTable } from "@/poke-API/models";
+import { createOwnedPokemonTable } from "@/poke-API/models";
 
 export default function PC() {
   const db = useSQLiteContext();
@@ -19,7 +19,7 @@ export default function PC() {
 
   // Create table on mount
   useEffect(() => {
-    createTable(db);
+    createOwnedPokemonTable(db);
   }, []);
 
   const filterPokemons = () => {

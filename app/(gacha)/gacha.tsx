@@ -5,7 +5,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { fetchPokemonData } from "../../poke-API/pokemonsDataFetch"
 import { useSQLiteContext } from "expo-sqlite";
 import { formatFromAPI } from "../../poke-API/formatApiResponse";
-import { createTable } from "@/poke-API/models"
+import { createOwnedPokemonTable } from "@/poke-API/models"
 
 export default function Gacha() {
     const db = useSQLiteContext();
@@ -14,7 +14,7 @@ export default function Gacha() {
 
     // Create table on mount
     useEffect(() => {
-        createTable(db);
+        createOwnedPokemonTable(db);
     }, []);
 
     const fetchPokemon = async (pokemonGameIndex: number) => {

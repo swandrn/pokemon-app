@@ -1,4 +1,4 @@
-export const createTable = async (db) => {
+export const createOwnedPokemonTable = async (db) => {
     try {
         // await db.execAsync(`DROP TABLE IF EXISTS pokemon;`);
         await db.execAsync(`
@@ -20,6 +20,22 @@ export const createTable = async (db) => {
                         in_party INTEGER DEFAULT 0,
                         count INTEGER DEFAULT 1
                     );
+                `);
+        console.log("Table created successfully");
+    } catch (error) {
+        console.error("Error creating table:", error);
+    }
+};
+
+export const createNameTable = async (db) => {
+    try {
+        // await db.execAsync(`DROP TABLE IF EXISTS pokemon;`);
+        await db.execAsync(`
+                    CREATE TABLE IF NOT EXISTS name (
+                        id INTEGER PRIMARY KEY AUTOINCREMENT,
+                        name TEXT NOT NULL,
+                        url TEXT NOT NULL,
+                        );
                 `);
         console.log("Table created successfully");
     } catch (error) {
