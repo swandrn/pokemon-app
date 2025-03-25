@@ -17,8 +17,6 @@ const typeImages: Record<string, any> = {
   steel: require("@typeImages/steel.png"),
   fairy: require("@typeImages/fairy.png"),
   ice: require("@typeImages/ice.png"),
-
-
 };
 
 export default typeImages;

@@ -15,6 +15,19 @@ type PokemonTableValues = {
     is_shiny: boolean;
 }
 
+
+type AllPokemons = {
+    count: number
+    next: string
+    previous: string
+    results: PokemonToFetch[]
+}
+
+type PokemonToFetch = {
+    name: string
+    url: string
+}
+
 type Pokemon = {
     game_index: number
     name: string
@@ -26,6 +39,7 @@ type Pokemon = {
     stats: Stat[]
     is_shiny: boolean;
 }
+
 
 type Move = {
     name: string
@@ -56,4 +70,4 @@ type Stat = {
     }
 }
 
-export type { Pokemon, PokemonTableValues, Sprites, PokemonType, Stat, Move }
+export type { Pokemon, PokemonTableValues, Sprites, PokemonType, Stat, Move, AllPokemons, PokemonToFetch }

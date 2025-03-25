@@ -1,6 +1,6 @@
-export const fetchPokemonData = async (id, isShiny) => {
+export const fetchPokemonData = async (id, isShiny, url) => {
   try {
-    const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${id}`);
+    const response = await fetch(url ? url : `https://pokeapi.co/api/v2/pokemon/${id}`);
     const data = await response.json();
 
     const moves = data.moves;
@@ -49,3 +49,23 @@ export const fetchPokemonData = async (id, isShiny) => {
     throw error;
   }
 };
+
+export const fetchAllPokemons = async (page) => {
+  const response = await fetch(`https://pokeapi.co/api/v2/pokemon?limit=151&offset=${page * 151}`);
+  const data = await response.json();
+  return data;
+};
+
+export const fetchPokemonDescription = async (id) => {
+  const response = await fetch(`https://pokeapi.co/api/v2/pokemon-species/${id}`);
+  const data = await response.json();
+  
+  // Find the English flavor text entry
+  const englishFlavorText = data.flavor_text_entries.find(
+    entry => entry.language.name === 'en'
+  );
+  
+  return englishFlavorText ? englishFlavorText.flavor_text : '';
+};
+
+

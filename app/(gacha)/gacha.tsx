@@ -15,8 +15,8 @@ export default function Gacha() {
     useEffect(() => {
         const createTable = async () => {
             try {
-                await db.execAsync(`DROP TABLE IF EXISTS pokemon;`);
-                console.log("Pokémon table deleted successfully");
+              /*   await db.execAsync(`DROP TABLE IF EXISTS pokemon;`); */
+                /* console.log("Pokémon table deleted successfully"); */
                 await db.execAsync(`
                     CREATE TABLE IF NOT EXISTS pokemon (
                         id INTEGER PRIMARY KEY AUTOINCREMENT,
