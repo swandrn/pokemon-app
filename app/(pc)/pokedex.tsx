@@ -3,6 +3,9 @@ import { FlatList, Image, Pressable, ScrollView, Text, View } from "react-native
 import { AllPokemons, Pokemon, PokemonToFetch } from "../../types/types";
 import { fetchAllPokemons, fetchPokemonByType, fetchPokemonData, fetchPokemonDescription } from "@/poke-API/pokemonsDataFetch";
 import typeImages from "@/types/images";
+import { getAllPokemons } from "@/poke-API/database";
+import { fillNameTable } from "@/poke-API/database";
+import { useSQLiteContext } from "expo-sqlite";
 
 
 type pokeTypeObject = {
@@ -11,6 +14,7 @@ type pokeTypeObject = {
 }
 
 export default function Pokedex() {
+  const db = useSQLiteContext();
   const [selectedPokemon, setSelectedPokemon] = useState<Pokemon | null>(null);
   const [displayedPokemons, setDisplayedPokemons] = useState< PokemonToFetch[] | null>(null);
   const [pokemonDescription, setPokemonDescription] = useState<string | null>(null);
@@ -18,9 +22,15 @@ export default function Pokedex() {
   const [selectedTypes, setSelectedTypes] = useState<string[]>([]);
 
   useEffect(() => {
-    fetchAllPokemons(0).then((data) => {
-      setDisplayedPokemons(data.results);
-    });
+    const fetchAllPokemons = async () => {
+      const allPokemons: PokemonToFetch[] = await getAllPokemons(db);
+      console.log(allPokemons);
+      if (allPokemons.length < 10) {
+        fillNameTable(db);
+      }
+      setDisplayedPokemons(allPokemons);
+    } 
+    fetchAllPokemons();
     fetchPokemonData(1, false).then((data) => {
       setSelectedPokemon(data as Pokemon);
     });

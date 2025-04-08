@@ -21,7 +21,7 @@ export const createOwnedPokemonTable = async (db) => {
                         count INTEGER DEFAULT 1
                     );
                 `);
-        console.log("Table created successfully");
+        console.log("Table pokemon created successfully");
     } catch (error) {
         console.error("Error creating table:", error);
     }
@@ -29,15 +29,16 @@ export const createOwnedPokemonTable = async (db) => {
 
 export const createNameTable = async (db) => {
     try {
-        // await db.execAsync(`DROP TABLE IF EXISTS pokemon;`);
+       // await db.execAsync(`DROP TABLE IF EXISTS name;`);
+      
         await db.execAsync(`
                     CREATE TABLE IF NOT EXISTS name (
                         id INTEGER PRIMARY KEY AUTOINCREMENT,
                         name TEXT NOT NULL,
-                        url TEXT NOT NULL,
+                        url TEXT NOT NULL
                         );
                 `);
-        console.log("Table created successfully");
+        console.log("Table name created successfully");
     } catch (error) {
         console.error("Error creating table:", error);
     }

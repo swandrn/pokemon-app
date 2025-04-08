@@ -2,13 +2,13 @@ import { useCallback, useEffect, useState } from "react";
 import { FlatList, Image, Pressable, ScrollView, View } from "react-native";
 import typeImages from "@/types/images";
 import { useSQLiteContext } from "expo-sqlite";
-import { PokemonTableValues } from "@/types/types";
+import { PokemonTableValues, PokemonToFetch } from "@/types/types";
 import { useFocusEffect } from "@react-navigation/native";
-import { getOwnedPokemons } from "@/poke-API/database";
+import { fillNameTable, getAllPokemons, getOwnedPokemons, initializeDB } from "@/poke-API/database";
 
 import React from "react";
 import Pokedex from "./pokedex";
-import { createOwnedPokemonTable } from "@/poke-API/models";
+import { createNameTable, createOwnedPokemonTable } from "@/poke-API/models";
 
 export default function PC() {
   const db = useSQLiteContext();
@@ -19,7 +19,7 @@ export default function PC() {
 
   // Create table on mount
   useEffect(() => {
-    createOwnedPokemonTable(db);
+    initializeDB(db);
   }, []);
 
   const filterPokemons = () => {
