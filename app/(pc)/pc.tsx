@@ -81,7 +81,7 @@ export default function PC() {
       }}>
       {/* --------------------{PC}-------------------- */}
       {!isPokedexOpen && (
-        <ScrollView style={{ flex: 1, flexDirection: "column", padding: 10, minHeight: "100%" }}>
+        <>
           <View style={{}}>
             <FlatList
               style={{ width: "100%" }}
@@ -109,27 +109,9 @@ export default function PC() {
             />
             <FlatList
               style={{}}
-              data={filteredPokemons}
-              keyExtractor={(item) => item.id.toString()}
-              numColumns={5}
-              scrollEnabled={false}
-              columnWrapperStyle={{
-                flexWrap: "wrap",
-                justifyContent: "flex-start",
-              }}
-              renderItem={({ item }) => (
-                <TouchableWithoutFeedback onPress={() => togglePokemonInParty(item)} key={item.id}>
-                  <View key={item.id} style={{ width: "19%", alignItems: "center", marginVertical: 5, backgroundColor: "#ffb04f", borderWidth: 2, marginHorizontal: 1, borderColor: "darkorange", borderRadius: 10, boxShadow: "1px 3px 0px 0px rgba(0, 0, 0, 0.3)" }}>
-                    <Image source={{ uri: item.front_sprite }} style={{ width: 60, height: 60 }} />
-                  </View>
-                </TouchableWithoutFeedback>
-              )}
-            />
-            <FlatList
-              style={{}}
               data={pokemonsInParty}
               keyExtractor={(item) => item.id.toString()}
-              numColumns={5}
+              numColumns={6}
               scrollEnabled={false}
               columnWrapperStyle={{
                 flexWrap: "wrap",
@@ -137,15 +119,39 @@ export default function PC() {
               }}
               renderItem={({ item }) => (
                 <TouchableWithoutFeedback onPress={() => togglePokemonInParty(item)} key={item.id}>
-                  <View key={item.id} style={{ width: "19%", alignItems: "center", marginVertical: 5, backgroundColor: "#4F9EFF", borderWidth: 2, marginHorizontal: 1, borderColor: "darkorange", borderRadius: 10, boxShadow: "1px 3px 0px 0px rgba(0, 0, 0, 0.3)" }}>
+                  <View key={item.id} style={{ width: "16%", alignItems: "center", marginVertical: 5, backgroundColor: "#4F9EFF", borderWidth: 2, marginHorizontal: 1, borderColor: "darkorange", borderRadius: 10, boxShadow: "1px 3px 0px 0px rgba(0, 0, 0, 0.3)" }}>
                     <Image source={{ uri: item.front_sprite }} style={{ width: 60, height: 60 }} />
                   </View>
                 </TouchableWithoutFeedback>
               )}
             />
           </View>
-        </ScrollView>
-      )}
+          <ScrollView style={{ flex: 1, flexDirection: "column", padding: 10, minHeight: "100%" }}>
+            <View style={{}}>
+              <FlatList
+                style={{}}
+                data={filteredPokemons}
+                keyExtractor={(item) => item.id.toString()}
+                numColumns={5}
+                scrollEnabled={false}
+                columnWrapperStyle={{
+                  flexWrap: "wrap",
+                  justifyContent: "flex-start",
+                }}
+                renderItem={({ item }) => (
+                  <TouchableWithoutFeedback onPress={() => togglePokemonInParty(item)} key={item.id}>
+                    <View key={item.id} style={{ width: "19%", alignItems: "center", marginVertical: 5, backgroundColor: "#ffb04f", borderWidth: 2, marginHorizontal: 1, borderColor: "darkorange", borderRadius: 10, boxShadow: "1px 3px 0px 0px rgba(0, 0, 0, 0.3)" }}>
+                      <Image source={{ uri: item.front_sprite }} style={{ width: 60, height: 60 }} />
+                    </View>
+                  </TouchableWithoutFeedback>
+                )}
+              />
+            </View>
+          </ScrollView>
+        </>
+
+      )
+      }
 
       {/* --------------------{POKEDEX}-------------------- */}
 
@@ -170,6 +176,6 @@ export default function PC() {
           />
         </Pressable>
       </View>
-    </View>
+    </View >
   );
 }
