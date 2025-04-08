@@ -1,5 +1,6 @@
 // Temporary type
 type PokemonTableValues = {
+    id: number;
     game_index: number;
     name: string;
     primary_type: string;
@@ -12,8 +13,8 @@ type PokemonTableValues = {
     special_attack_stat: number;
     special_defense_stat: number;
     speed_stat: number;
-    is_shiny: boolean;
-    in_party: boolean;
+    is_shiny: 0 | 1;
+    in_party: 0 | 1;
 }
 
 
