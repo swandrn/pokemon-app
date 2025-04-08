@@ -52,8 +52,10 @@ export default function Pokedex() {
       fetchAllPokemonsFromDb();
     } else if (typeSearchResults.length === 1) {
       setDisplayedPokemons(typeSearchResults[0].pokemons);
+      setAllPokemons(typeSearchResults[0].pokemons);
     } else {
       setDisplayedPokemons(typeSearchResults.map((t) => t.pokemons).reduce((acc, curr) => acc.filter((pokemon) => curr.some((p) => p.name === pokemon.name))));
+      setAllPokemons(typeSearchResults.map((t) => t.pokemons).reduce((acc, curr) => acc.filter((pokemon) => curr.some((p) => p.name === pokemon.name))));
     }
   }, [typeSearchResults]);
 
@@ -74,14 +76,12 @@ export default function Pokedex() {
   useEffect(() => {
     if (allPokemons) {
       if (searchInput.length > 0) {
-        setDisplayedPokemons(allPokemons.filter((pokemon) => 
-          pokemon.name.toLowerCase().includes(searchInput.toLowerCase())
-        ));
+        setDisplayedPokemons(allPokemons.filter((pokemon) => pokemon.name.toLowerCase().includes(searchInput.toLowerCase())));
       } else {
         setDisplayedPokemons(allPokemons);
       }
     }
-  }, [searchInput, allPokemons]);
+  }, [searchInput]);
 
   /* const filterByType = () => {
     fetchPokemonByType(type).then((data) => {
