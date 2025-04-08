@@ -1,7 +1,7 @@
 export async function addPokemonToParty(db, pokemonId) {
     try {
         const partyCountResult = await db.getFirstAsync(
-            `SELECT COUNT(*) as count FROM pokemon WHERE inParty = 1;`
+            `SELECT COUNT(*) as count FROM pokemon WHERE in_party = 1;`
         );
 
         const partyCount = partyCountResult?.count ?? 0;
@@ -11,7 +11,7 @@ export async function addPokemonToParty(db, pokemonId) {
         }
 
         await db.runAsync(
-            `UPDATE pokemon SET inParty = 1 WHERE id = ?;`,
+            `UPDATE pokemon SET in_party = 1 WHERE id = ?;`,
             [pokemonId]
         );
 
@@ -25,7 +25,7 @@ export async function addPokemonToParty(db, pokemonId) {
 export async function removePokemonFromParty(db, pokemonId) {
     try {
         const partyCountResult = await db.getFirstAsync(
-            `SELECT COUNT(*) as count FROM pokemon WHERE inParty = 1;`
+            `SELECT COUNT(*) as count FROM pokemon WHERE in_party = 1;`
         );
 
         const partyCount = partyCountResult?.count ?? 0;
@@ -35,7 +35,7 @@ export async function removePokemonFromParty(db, pokemonId) {
         }
 
         const pokemonInParty = await db.getFirstAsync(
-            `SELECT id FROM pokemon WHERE id = ? AND inParty = 1;`,
+            `SELECT id FROM pokemon WHERE id = ? AND in_party = 1;`,
             [pokemonId]
         );
 
@@ -44,7 +44,7 @@ export async function removePokemonFromParty(db, pokemonId) {
         }
 
         await db.runAsync(
-            `UPDATE pokemon SET inParty = 0 WHERE id = ?;`,
+            `UPDATE pokemon SET in_party = 0 WHERE id = ?;`,
             [pokemonId]
         );
 
@@ -55,7 +55,7 @@ export async function removePokemonFromParty(db, pokemonId) {
     }
 }
 
-export async function getCurrentParty(db){
+export async function getCurrentParty(db) {
     try {
         const partyPokemons = await db.getAllAsync(
             `SELECT * FROM pokemon WHERE in_party = 1;`

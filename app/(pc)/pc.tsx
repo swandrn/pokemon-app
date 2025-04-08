@@ -1,10 +1,11 @@
 import { useCallback, useEffect, useState } from "react";
-import { FlatList, Image, Pressable, ScrollView, View } from "react-native";
+import { FlatList, Image, Pressable, ScrollView, TouchableWithoutFeedback, View } from "react-native";
 import typeImages from "@/types/images";
 import { useSQLiteContext } from "expo-sqlite";
 import { PokemonTableValues, PokemonToFetch } from "@/types/types";
 import { useFocusEffect } from "@react-navigation/native";
 import { fillNameTable, getAllPokemons, getOwnedPokemons, initializeDB } from "@/poke-API/database";
+import { addPokemonToParty, removePokemonFromParty } from "@/poke-API/services";
 
 import React from "react";
 import Pokedex from "./pokedex";
@@ -16,26 +17,33 @@ export default function PC() {
   const [filteredPokemons, setFilteredPokemons] = useState<PokemonTableValues[]>([]);
   const [selectedTypes, setSelectedTypes] = useState<string[]>([]);
   const [isPokedexOpen, setIsPokedexOpen] = useState(false);
+  const [pokemonsInParty, setPokemonsInParty] = useState<PokemonTableValues[]>([]);
 
   // Create table on mount
   useEffect(() => {
     initializeDB(db);
   }, []);
 
+  useEffect(() => {
+    const inParty = ownedPokemons.filter(p => p.in_party === 1);
+    setPokemonsInParty(inParty);
+  }, [ownedPokemons]);
+
   const filterPokemons = () => {
     if (selectedTypes.length === 0) {
       setFilteredPokemons(ownedPokemons);
       return;
     }
-    const filteredPokemons = ownedPokemons.filter((pokemon) => {
-      return selectedTypes.includes(pokemon.primary_type || pokemon.secondary_type);
-    });
-    setFilteredPokemons(filteredPokemons);
+    const filtered = ownedPokemons.filter((pokemon) =>
+      selectedTypes.includes(pokemon.primary_type) ||
+      (pokemon.secondary_type && selectedTypes.includes(pokemon.secondary_type))
+    );
+    setFilteredPokemons(filtered);
   };
 
   useEffect(() => {
     filterPokemons();
-  }, [selectedTypes]);
+  }, [selectedTypes, ownedPokemons]);
 
   useFocusEffect(
     useCallback(() => {
@@ -49,6 +57,21 @@ export default function PC() {
       };
     }, [])
   );
+
+  const togglePokemonInParty = (pokemon: PokemonTableValues) => {
+    const toggleFn = pokemon.in_party ? removePokemonFromParty : addPokemonToParty;
+    toggleFn(db, pokemon.id).then((success: boolean) => {
+      if (!success) return;
+
+      setOwnedPokemons(prev =>
+        prev.map(p =>
+          p.id === pokemon.id
+            ? { ...p, in_party: p.in_party ? 0 : 1 }
+            : p
+        )
+      );
+    });
+  }
 
   return (
     <View
@@ -87,7 +110,7 @@ export default function PC() {
             <FlatList
               style={{}}
               data={filteredPokemons}
-              keyExtractor={(item, index) => index.toString()}
+              keyExtractor={(item) => item.id.toString()}
               numColumns={5}
               scrollEnabled={false}
               columnWrapperStyle={{
@@ -95,9 +118,29 @@ export default function PC() {
                 justifyContent: "flex-start",
               }}
               renderItem={({ item }) => (
-                <View style={{ width: "19%", alignItems: "center", marginVertical: 5, backgroundColor: "#ffb04f", borderWidth: 2, marginHorizontal: 1, borderColor: "darkorange", borderRadius: 10, boxShadow: "1px 3px 0px 0px rgba(0, 0, 0, 0.3)" }}>
-                  <Image source={{ uri: item.front_sprite }} style={{ width: 60, height: 60 }} />
-                </View>
+                <TouchableWithoutFeedback onPress={() => togglePokemonInParty(item)} key={item.id}>
+                  <View key={item.id} style={{ width: "19%", alignItems: "center", marginVertical: 5, backgroundColor: "#ffb04f", borderWidth: 2, marginHorizontal: 1, borderColor: "darkorange", borderRadius: 10, boxShadow: "1px 3px 0px 0px rgba(0, 0, 0, 0.3)" }}>
+                    <Image source={{ uri: item.front_sprite }} style={{ width: 60, height: 60 }} />
+                  </View>
+                </TouchableWithoutFeedback>
+              )}
+            />
+            <FlatList
+              style={{}}
+              data={pokemonsInParty}
+              keyExtractor={(item) => item.id.toString()}
+              numColumns={5}
+              scrollEnabled={false}
+              columnWrapperStyle={{
+                flexWrap: "wrap",
+                justifyContent: "flex-start",
+              }}
+              renderItem={({ item }) => (
+                <TouchableWithoutFeedback onPress={() => togglePokemonInParty(item)} key={item.id}>
+                  <View key={item.id} style={{ width: "19%", alignItems: "center", marginVertical: 5, backgroundColor: "#4F9EFF", borderWidth: 2, marginHorizontal: 1, borderColor: "darkorange", borderRadius: 10, boxShadow: "1px 3px 0px 0px rgba(0, 0, 0, 0.3)" }}>
+                    <Image source={{ uri: item.front_sprite }} style={{ width: 60, height: 60 }} />
+                  </View>
+                </TouchableWithoutFeedback>
               )}
             />
           </View>
