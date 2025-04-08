@@ -60,25 +60,9 @@ export default function Gacha() {
   };
 
   return (
-    <SafeAreaView style={{ flex: 1, flexDirection: "column", padding: 10 }}>
-      <Text style={{ fontSize: 20, fontWeight: "bold", color: "black" }}>Gacha</Text>
-      <View>
-        <Text style={{ fontSize: 20, fontWeight: "bold", color: "black" }}>Pokemons</Text>
-        <Button title="Fetch Pokemon" onPress={() => handlePress()} />
-      </View>
-      <View>
-        <Image source={{ uri: pokemon?.front_sprite }} style={{ width: 100, height: 100 }} />
-        <Text style={{ fontSize: 20, fontWeight: "bold", color: "black" }}>{pokemon?.name}</Text>
-        <Text style={{ fontSize: 20, fontWeight: "bold", color: "black" }}>Stats</Text>
-        {pokemon?.stats.map((stat) => (
-          <Text key={stat.stat.name}>
-            {stat.stat.name}: {stat.base_stat}
-          </Text>
-        ))}
-        <Text style={{ fontSize: 20, fontWeight: "bold", color: "black" }}>Moves</Text>
-        {pokemon?.moves.map((move) => (
-          <Text key={move.name}>{move.name}</Text>
-        ))}
+    <SafeAreaView style={{ flex: 1, flexDirection: "column", padding: 10, backgroundColor: "white" }}>
+      <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+        <Image source={require("../../assets/images/PokeEgg.png")} style={{ width: 200, height: 200, objectFit: "contain" }} />
       </View>
     </SafeAreaView>
   );

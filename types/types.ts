@@ -16,6 +16,18 @@ type PokemonTableValues = {
     in_party: boolean;
 }
 
+type ItemType = {
+    id: number
+    name: string
+}
+
+type GatchaItem = {
+    id: number
+    name: string
+    description: string
+    quantity: number
+    price: number
+}
 
 type AllPokemons = {
     count: number
